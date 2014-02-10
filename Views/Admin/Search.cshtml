@@ -1,0 +1,30 @@
+﻿@model MvcApplication1.Models.Donor_signup
+@{
+    ViewBag.Title = "Search";
+}
+
+<div>
+    <form action="/Admin/Search" method="post">
+        <input type="text" name="Name" id="d1" placeholder="Name" required=""/>
+        <input type="submit" name="Search" value="Search" />
+        <table border="1" width="800px" style="margin:25px 0 0 -250px;" id="table1"><THEAD BGCOLOR="lightskyblue"><tr><th>Name</th><th>City</th><th>Contact</th><th>Blood Group</th><th>EmailID</th><th>Status</th></tr>
+            @if(Session["Key"]!=null && Model!=null){
+            <tr><td>@Model.Name</td><td>@Model.city</td><td>@Model.Contact</td><td>@Model.Bgroup</td><td>@Model.EmailId</td><td>@Model.Status</td></tr>
+            }
+            </table>
+        
+        </form>
+    @if (Model != null)
+    {
+       
+    
+       using (@Html.BeginForm("Delete", "Admin", FormMethod.Get, new { id = @Model.Name })){
+           <input type="text" name="name" value="@Model.Name">
+        <input type="submit" value="Delete" />
+    }
+            
+    }
+  
+  
+    </div>
+<br><br><br><br><br><br><br><br><br>

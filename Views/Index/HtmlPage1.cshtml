@@ -1,0 +1,148 @@
+﻿@if(Session["key"]!=null){
+@model List<MvcApplication1.Models.Donor_signup >   
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="~/Content/style.css">
+
+        <title>Blood Donation System</title>
+
+        
+        <script type="text/javascript">
+
+            function search1() {
+               // alert("hi ");
+
+                $.getJSON("/Home/Search_donor", { city: $('#s1').val(), Bgroup: $('#s2').val() }, function (data) {
+                    //  alert("hi ");
+                    $("#ww").empty();
+                    $.each(data, function (i, item) {
+                      
+                        $("#ww").append("<tr><td>" + item.Name + "</td><td>" + item.city + "</td>" + "<td>" + item.Contact + "</td><td>" + item.Bgroup + "</td><td>" + item.EmailId + "</td><td>" + item.Status + "</td></tr>");
+                       
+                        //return false;
+                      
+                    });
+                });
+            }
+
+
+            //////////////////////////////////////////////cheking ends here//////////////////
+
+            function changePassword() {
+
+                var newdiv = document.getElementById('key');
+
+                newdiv.innerHTML = "<form action='Change_Donor_Password' name='form10' method='post'>\n\
+            <input type='password' name='p0' required placeholder=' Current Password' title='Current Password'/>\n\
+            <input type='password' name='p1' required placeholder=' Password' title='Password'/>\n\
+            <input type='password' name='p2' required placeholder=' Password Again' title='Password'/>\n\
+            <input type='submit' value='Change Password' onClick='return checkPassword();'/></form>";
+
+
+            }
+
+            function checkPassword() {
+                for (i = 0; i < ((document.form10.elements.length) - 1) ; i++) {
+                    if (document.form10.elements[i].value == null || document.form10.elements[i].value == "") {
+                        alert("All locations must be filled out");
+                        return false;
+                    }
+                }
+
+                if (document.form10.password1.value != document.form10.password2.value) {
+                    alert("Password Mis-Matched");
+                    return false;
+                }
+
+                return true;
+            }
+
+            function changeCity() {
+
+                var newdiv = document.getElementById('key');
+
+                newdiv.innerHTML = "<form action='Change_City' name='form12' method='post'>\n\
+            <p style='color: #A0A0A0'>City: <select name='city'><option value='Lahore'>Lahore</option>\n\
+            <option value='Karachi'>Karachi</option><option value='Islamabad'>Islamabad</option>\n\
+            <option value='Faisalabad'>Faisalabad</option></select></p>\n\
+            <input type='submit' value='Change City'/></form>";
+            }
+
+            function changeStatus() {
+
+                var newdiv = document.getElementById('key');
+
+                newdiv.innerHTML = "<form action='Change_Status' name='form11' method='post'>\n\
+            <p style='color: #A0A0A0'>Donor Status: <select name='status' title='Status'>\n\
+            <option value='Available'>Available</option><option value='Not Available'>Not Available</option>\n\
+            </select></p><input type='submit' value='Change Status'/></form>";
+            }
+
+            function search2() {
+
+                var newdiv = document.getElementById('key');
+               // alert("hello");
+                newdiv.innerHTML = "<form action='/Home/Search_donor' name='form3' ><select name='city' id='s1'>\n\
+                    <option value='Lahore'>Lahore</option><option value='Karachi'>Karachi</option>\n\
+                    <option value='Islamabad'>Islamabad</option><option value='Faisalabad'>Faisalabad</option></select>\n\
+                    <select name='Bgroup' id='s2'><option value='A+'>A+</option><option value='B+'>B+</option>\n\
+                    <option value='O+'>O+</option><option value='AB+'>AB+</option><option value='A-'>A-</option>\n\
+                    <option value='B-'>B-</option><option value='O-'>O-</option><option value='AB-'>AB-</option></select>\n\
+                    <input type='button' value='Quick Search' onClick='search1();'/><table border='1'width='800px' style='margin:25px 0 0 -150px;' id='tj1'><THEAD BGCOLOR='lightskyblue'><tr><th>Name</th><th>City</th><th>Contact</th><th>Blood Group</th><th>EmailID</th><th>Status</th></tr><tbody id='ww'></tbody></table>"
+            }
+
+            function deleteAccount() {
+
+                var newdiv = document.getElementById('key');
+
+                newdiv.innerHTML = "<form action='Delete_donor' name='form3' method='post'><p name='p1' align='center' style='color: #FF0000'>Are you sure you want to <b>DELETE</b> your Account? \n\
+ <select name='delete'>\n\
+                    <option value='Yes'>Yes</option><option value='No'>No</option><br><br><br><input type='submit' value='Delete' width='34px' onClick=''/> ";
+            }
+
+        </script>	
+
+    
+
+
+        <table border="0" align="center">
+            <tr>
+                <td width="950px"><img src="images/header.jpg">
+                </td>
+            </tr>
+            <tr>
+                
+                <td align="right">
+                    @Html.ActionLink("logout", "logout", "HOME",new { @style = "background-image: url('~/images/logout.png');"});
+                    @*<a href=""><img width="34px" height="34px" src="~/images/logout.png"></a>*@
+                </td>
+            </tr>
+        </table>
+
+        <br><br>
+        <table border="0" width="800px" align="center">
+            <tr>
+                <td align="center" width="200px">
+                    <table border="0" width="200px" align="center">
+    
+                        <tr><td>
+                            <a href="javascript:search2()"><img width="180px" height="40px" src="~/images/search.png"></a></td></tr>
+                        <tr><td><p></p></td></tr>
+                        <tr><td><a href="javascript:changePassword();"><img width="180px" height="40px" src="~/images/password.png"></a></td></tr>
+                        <tr><td><a href="javascript:changeCity()"><img width="180px" height="40px" src="~/images/city.png"></a></td></tr>
+                        <tr><td><a href="javascript:changeStatus()"><img width="180px" height="40px" src="~/images/status.png"></a></td></tr>
+                        <tr><td><a href="javascript:deleteAccount()"><img width="180px" height="40px" src="~/images/delete.png"></a></td></tr>
+                    </table>
+                </td>
+                <td align="center" width="100px"></td>
+                <td align="center" width="500px">
+                    <table border="0" width="490px" align="center">
+                        <tr><td id = "key"><img width="490px" height="250" src="~/images/blood.png"></td></tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+
+     
+
+}
